@@ -11,18 +11,24 @@ const io = socketio(servidor, {
     }
   });
 
+var clientes= [];
+
 io.on('connection', socket => {
 
     let nombre; 
+  
     //cada vez que un cliente se conecta se ejecuta esta funcion (el socket se conecta a la transmision de conectado)
-   
+    
     socket.on('conectado', (nom) => {
         nombre = nom;
+        clientes.push(nom);
+        console.log(clientes);
+        socket.broadcast.emit('clientes', {clientes});
         //le mandamos el mensaje que un usuario ha entrada al chat a todos menos al que ha entrado
         socket.broadcast.emit('mensajes', {nombre: nombre, texto: `${nombre} ha entrado en el chat` });
-        console.log("se ha conectado", nombre);
+        console.log("se ha conectado", nombre); 
     }) 
-
+    
     socket.on('mensaje',(nombre, texto) => {
         //enviamos al cliente el mensaje que le llega al servidor
         io.emit('mensajes', {nombre, texto});
@@ -31,7 +37,12 @@ io.on('connection', socket => {
  
     socket.on('disconnect', () => {
         io.emit('mensajes', {servidor: "Servidor", texto: `${nombre} ha abandonado en el chat` });
-    })
+    })   
+
 })     
+
+
+
+ 
    
 servidor.listen(3000,() => console.log("Servidor inicializado"));  
