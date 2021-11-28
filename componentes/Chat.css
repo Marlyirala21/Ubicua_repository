@@ -1,0 +1,98 @@
+   .wrapper {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    height: 100%;
+    width: 100%;
+  }
+  .chat {
+    width: 100%;
+    min-width: 50vh;
+    max-height: 15vh;
+    min-height: 80vh;
+    overflow: scroll;
+    margin-top: 2%;
+  }
+
+  .form {
+    display: flex;
+    border-top: 2px solid #D3D3D3;
+  }
+  
+  .enviar {
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: rgb(112, 25, 112);
+    padding: 8px;
+    display: inline-block;
+    border: none;
+    width: 20%;
+  }
+
+  .input {
+    width: 75%;
+    margin-right: 1%;
+    height: 2em;
+  }
+  /* mensajes */
+    
+.nombre {
+  display: flex;
+  align-items: center;
+  font-family: Helvetica;
+  color: #828282;
+  letter-spacing: 0.3px;
+}
+.textoIzq {
+  width: auto;
+  letter-spacing: 0;
+  margin-left: 2%;
+  font-size: 1em;
+  word-wrap: break-word;
+}
+.textoDcha {
+  width: auto;
+  letter-spacing: 0;
+  margin-left: 2%;
+  font-size: 1em;
+  word-wrap: break-word;
+  text-align: end;
+}
+
+
+.mensajeDcha {
+  width: auto;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 7%;
+  margin-top: 1.5px;
+  justify-content: end;
+}
+
+.mensajeIzq {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 7%;
+  margin-top: 1.5px;
+  justify-content: start;
+}
+
+.color1 {
+  background-color: lightcyan;
+  border-radius: 8px;
+  padding: 3%;
+}
+.color2{
+  background-color: lightgoldenrodyellow;
+  border-radius: 8px;
+  padding: 3%;
+}
+/* USUARIOS CONECTADOS */
+.usuariosConectados{
+  margin-left: 10px;
+  padding: 2px;
+  font-size: 18px;
+  font-family: Arial, 'Helvetica', sans-serif;
+}
+
