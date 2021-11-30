@@ -4,12 +4,9 @@ import React, { useState } from "react";
 import TareaForm from "./componentes/TareaForm";
 import Tarea from "./componentes/Tarea";
 import "./App.css";
-
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getDatabase, ref, set, get } from "firebase/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,11 +15,14 @@ const firebaseConfig = {
   projectId: "lab4-100405994",
   storageBucket: "lab4-100405994.appspot.com",
   messagingSenderId: "1060798621624",
-  appId: "1:1060798621624:web:ad6a5d4de5af959719514d"
+  appId: "1:1060798621624:web:ad6a5d4de5af959719514d",
+  databaseURL:"https://lab4-100405994-default-rtdb.europe-west1.firebasedatabase.app/"
+
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
@@ -30,39 +30,57 @@ const googleProvider = new GoogleAuthProvider();
 console.log(app);
 
 function App() {
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [userName, setUserName] = useState(null);
 
   const signInWithGoogle = async () => {
     try {
       const res = await signInWithPopup(auth, googleProvider);
       const user = res.user;
 
-      console.log(user);
+      const userRef = ref(db, `/users/${user.uid}`);
+      const snapshot = await get(userRef);
+
+      const data = snapshot.val();
+
+      if (data) {
+        console.log(data);
+      } else {
+        await set(ref(db, "users/" + user.uid),{
+          username: user.displayName,
+          email: user.email
+        });
+      }
+      setLoggedIn(true);
+      setUserName(user.displayName);
     } catch (err) {
       console.error(err);
       alert(err.message);
     }
   };
+  // const [listaTareas, setListaTareas] = useState([]);
 
-  const [listaTareas, setListaTareas] = useState([]);
+  // const nuevaTarea = (tarea) => {
+  //   setListaTareas([tarea, ...listaTareas]);
+  // };
 
-  const nuevaTarea = (tarea) => {
-    setListaTareas([tarea, ...listaTareas]);
-  };
-
-  const borrar = (id) => {
-    const listaFiltrada = listaTareas.filter((e, index) => index !== id);
-    setListaTareas(listaFiltrada);
-  };
+  // const borrar = (id) => {
+  //   const listaFiltrada = listaTareas.filter((e, index) => index !== id);
+  //   setListaTareas(listaFiltrada);
+  // };
 
   return (
     <div className="App">
-      <TareaForm nuevaTarea={nuevaTarea} />
-
+      {/* <TareaForm nuevaTarea={nuevaTarea} />
       <div className="lista">
         {listaTareas.map((e, index) => (
           <Tarea tarea={e} borrar={borrar} id={index}/>
         ))}
-      </div>
+      </div> */}
+      {isLoggedIn && <h1>Welcome, {userName}</h1>}
+      {!isLoggedIn && (
+        <button onClick={signInWithGoogle}>Sign-in with Google</button>
+      )}
     </div>
   );
 }

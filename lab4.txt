@@ -1,0 +1,17 @@
+counter
+posts
+tasks
+users
+
+user
+user_id
+taskslist
+
+
+user_id
+task_list
+
+un nodo con todos los usuraios, dentro el id de los usuarios
+y otro nodo con todas las tareas, dentro tener repetido el id de los usuarios con las tareas de ese id
+
+image capture
