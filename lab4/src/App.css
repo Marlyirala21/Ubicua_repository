@@ -20,20 +20,11 @@
   color: white;
 }
 
-.validacion {
-  width: 80%;
-  color: red;
-  margin: 0 auto;
+.App {
+  font-family: sans-serif;
+  text-align: center;
 }
 
-.lista {
-  width: 80%;
-  margin: 50px auto 0;
-}
-
-.tarea {
-  font-size: 20px;
-  margin: 20px 0 15px 0;
-  display: grid;
-  grid-template-columns: 3fr 1fr 1fr;
+.done {
+  text-decoration-line: line-through;
 }
